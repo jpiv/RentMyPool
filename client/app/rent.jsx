@@ -25,7 +25,9 @@ var Listings = React.createClass({
 
   componentWillMount: function () {
     RentStore.addFetchEntriesListener(this.refreshResults);
-    RentStore.addFilterChangeListener(this.handleFilterChange);
+    //RentStore.addFilterChangeDateListener(this.handleFilterChange);
+    RentStore.addFilterChangeLocationListener(this.handleFilterChange);
+
 
     RentActions.fetchEntries();
   },
@@ -41,12 +43,12 @@ var Listings = React.createClass({
 
   handleFilterChange: function (data) {
     var newEntries =  this.state.allData;
-    if(data.date)
-      newEntries = newEntries.filter(function (item, index) {
-        if(item.date && item.date.includes(data.date))
-          return true;
-        else return false;
-      });
+ //   if(data.date)
+ //     newEntries = newEntries.filter(function (item, index) {
+ //       if(item.date && item.date.includes(data.date))
+ //         return true;
+ //       else return false;
+ //     });
 
     if(data.location)
       newEntries = newEntries.filter(function (item, index) {
@@ -97,10 +99,11 @@ var Filter = React.createClass({
   handleDateChange: function(e) {
     var date = e.target.value;
     this.setState({
-      date: date
+      date: date,
+      location : this.state.location
     },
       function () {
-        RentActions.filterChange(this.state);
+        RentActions.filterChangeDate(this.state);
       }
     );
   },
@@ -110,7 +113,7 @@ var Filter = React.createClass({
       location: e.target.value
     },
       function () {
-        RentActions.filterChange(this.state);
+        RentActions.filterChangeLocation(this.state);
       }
     );
   },

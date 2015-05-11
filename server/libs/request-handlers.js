@@ -16,20 +16,23 @@ exports.getUser = function (req, res) {
 exports.getListings = function(req, res) {
   console.log('getListings', req.url);
   utils.checkUser(req,res, function() {
-    console.log('getting list!')
       var query = url.parse(req.url).query;
-      var date = req.query.date || '2015/05/06';
+      var date = req.query.date;
+      var loc = req.query.loc;
       //query db for all items listed
       Item.find({}, function(err, items) {
           if(!err) {
             var resultItems = items.filter(function(item) {
+              if (date && item.dateFrom && item.dateTo) {
+                if (!utils.checkDateRange(item.dateFrom,item.dateTo,date)) return false;
+              }
+              if (loc && item.address.indexOf(loc) < 0) return false;
               if(!item.calendar) {
                 return true;
               }
               return !item.calendar.hasOwnProperty(date);
             })
-            console.log('sending items back!');
-            console.log(resultItems);
+            console.log('sending items back! ',resultItems.length);
             res.status(200).send({results: resultItems});
           }
           else {
@@ -106,7 +109,8 @@ exports.addItemToListings = function(req, res) {
       name : itemInfo.name, 
       address : itemInfo.address,
       price : itemInfo.price,
-      date: itemInfo.date,
+      dateFrom : itemInfo.dateFrom,
+      dateTo: itemInfo.dateTo,
       user_id: itemInfo.user_id,
       img: itemInfo.file
     });

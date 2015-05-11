@@ -39,3 +39,19 @@ exports.createSession = function(request, response, user) {
         response.status(201).send(user);
     });
 }
+
+var dateString = function(date) {
+    var parts = date.split('/');
+    var parts2 = [];
+    parts2[0] = parts[2];
+    parts2[1] = parts[0];
+    parts2[2] = parts[1];
+    return parts2.join('');
+}
+
+exports.checkDateRange = function(from, to, date) {
+  from = dateString(from);
+  to = dateString(to);
+  date = dateString(date);
+  return (from <= date && to >= date);
+}

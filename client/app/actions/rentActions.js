@@ -23,9 +23,16 @@ var RentActions = {
     });
   },
 
-  filterChange: function (data) {
+  filterChangeDate: function (data) {
     RentDispatcher.dispatch({
-      type: RentConstants.FILTER_CHANGE,
+      type: RentConstants.FILTER_CHANGE_DATE,
+      load: data
+    });
+  },
+
+  filterChangeLocation: function (data) {
+    RentDispatcher.dispatch({
+      type: RentConstants.FILTER_CHANGE_LOCATION,
       load: data
     });
   }
