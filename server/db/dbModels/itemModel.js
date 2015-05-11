@@ -7,7 +7,8 @@ var itemSchema = mongoose.Schema({
   price: {type: Number, required: true},
   calendar: {},
   rules: [],
-  date: "",
+  dateFrom: {type: String, required: true},
+  dateTo: {type: String, required: true},
   user_id: {type: String, required: true},
   img : {type: String, required: false},
   booker_id: { type: String }

@@ -6,7 +6,10 @@ var ListContent = React.createClass({
     address : 'Address',
     price : 'Price',
     date: "Date",
-    user_id: ""
+    title: "Title",
+    user_id: "",
+    dateFrom : "Date from",
+    dateTo : "Date to"
     };
   },
 
@@ -16,6 +19,7 @@ var ListContent = React.createClass({
 
   componentDidMount: function () {
     $( "#datepicker" ).datepicker();
+    $( "#datepicker2" ).datepicker();
     AppActions.fetchUser();
   },
 
@@ -36,8 +40,10 @@ var ListContent = React.createClass({
       name: e.target.name.value,
       address: e.target.address.value,
       price: e.target.price.value,
-      date: e.target.date.value,
-      file: e.target.userPhoto.files[0]
+      dateFrom: e.target.dateFrom.value,
+      dateTo: e.target.dateTo.value,
+      file: e.target.userPhoto.files[0],
+      title: e.target.name.title,
     }, 
       function () {
         ListingsActions.listingSubmitted(this.state);
@@ -51,6 +57,9 @@ var ListContent = React.createClass({
         <LoginTransitioner />
         <h1>List a Pool</h1>
         <form onSubmit={this.handleSubmit}>
+          <input name="title" placeholder={this.state.title} type="text" />
+          <br />
+          <br />
           <input name="name" placeholder={this.state.name} type="text" />
           <br />
           <br />
@@ -60,7 +69,10 @@ var ListContent = React.createClass({
           <input name="price" placeholder={this.state.price} type="text" />
           <br />
           <br />
-          <input name="date" id="datepicker" placeholder={this.state.date} type="text" />
+          <input name="dateFrom" id="datepicker" placeholder={this.state.dateFrom} type="text" />
+          <br />
+          <br />
+          <input name="dateTo" id="datepicker2" placeholder={this.state.dateTo} type="text" />
           <br />
           <br />
           <input type="file" id="userPhotoInput" name="userPhoto" />
