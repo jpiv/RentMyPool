@@ -16,11 +16,9 @@ exports.getUser = function (req, res) {
 exports.getListings = function(req, res) {
   console.log('getListings', req.url);
   utils.checkUser(req,res, function() {
-    console.log('getting list!')
       var query = url.parse(req.url).query;
       var date = req.query.date;
       var loc = req.query.loc;
-      console.log(loc);
       //query db for all items listed
       Item.find({}, function(err, items) {
           if(!err) {

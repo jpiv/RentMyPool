@@ -7,7 +7,6 @@ var _postLogin = function (user) {
       data: JSON.stringify(user),
       statusCode: {
         201: function (data) {
-          console.log("201");
           resolve(data);
         }
       }, 
